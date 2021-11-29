@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { auth, db } from '../firebase';
@@ -101,7 +101,7 @@ function ChatScreen({ chat, messages }) {
               {recipient?.lastSeen?.toDate() ? (
                 <TimeAgo datetime={recipient?.lastSeen?.toDate()} />
               ) : (
-                'Unavailable'
+                <span style={{color:'green', fontSize:'16px', fontWeight:'600'}} >online</span>
               )}
             </p>
           ) : (
@@ -158,6 +158,8 @@ const Input = styled.input`
   outline-width:0;
   border:0px solid gray;
 `;
+
+
 
 const Container = styled.div``;
 const Header = styled.div`

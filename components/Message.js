@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {auth, db, provider} from '../firebase'
 import moment from 'moment'
@@ -11,7 +11,7 @@ function Message({user, message}) {
 
 const Container = user===userLoggedIn.email?Container1:Container2;
     return (
-        <Container>
+        <Container style={{overflow:'hidden'}} >
             <TypeOfMessage>
                 {message.message}
                 <Timestamp>{message.timestamp?moment(message.timestamp).format("LT"):"..."}</Timestamp>
@@ -29,7 +29,14 @@ const Container2 = styled.div`
 display:flex;
 justify-content:flex-start;
 `;
-
+const animate = keyframes`
+  from{
+    transform:translateX(-100%);
+  }
+  to{
+    transform:translateX(0);
+  }
+`
 const MessageElement = styled.div`
     width:fit-content;
     padding:15px;
@@ -43,11 +50,13 @@ const MessageElement = styled.div`
 const Sender = styled(MessageElement)`
     text-align:right;
     background-color:#dcf8c6;
+    
 `;
 
 const Receiver = styled(MessageElement)`
     background-color:whitesmoke;
     text-align:left;
+    animation:${animate} 0.2s normal;
 `
 const Timestamp = styled.span`
     color:gray;
